@@ -1,5 +1,7 @@
 # iVIBO : APP & WEB
+
 --Quy ước viết code--
+
 Khi viết code cho dự án này, hãy tuân theo các quy ước viết code được mô tả dưới đây:
 
 Sử dụng camel case cho tên biến, hàm và tên file (ví dụ: myVariable, myFunction).
@@ -16,6 +18,7 @@ Bằng cách tuân thủ các quy ước viết code này, chúng ta có thể �
 Hãy tự do thêm hoặc sửa đổi các quy ước này theo yêu cầu cụ thể của dự án của bạn.
 
 --Quy ước commit & message--
+
 1.Feat: - Dùng để chỉ một tính năng mới.
 Ví dụ: feat: add user login functionality
 
