@@ -14,6 +14,7 @@ Sử dụng hệ thống quản lý phiên bản (ví dụ: Git) để theo dõi
 Bằng cách tuân thủ các quy ước viết code này, chúng ta có thể đảm bảo tính nhất quán và khả năng đọc được trong toàn bộ dự án.
 
 Hãy tự do thêm hoặc sửa đổi các quy ước này theo yêu cầu cụ thể của dự án của bạn.
+
 --Quy ước commit & message--
 1.Feat: - Dùng để chỉ một tính năng mới.
 Ví dụ: feat: add user login functionality
