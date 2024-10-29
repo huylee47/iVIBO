@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Laravel\Sanctum\HasApiTokens;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,8 +19,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
-        'password',
+        'avatar',
+        'address',
+        'phone_number',
+        'role_id',
+        'status',
+        'limit_remaining',
+        
     ];
 
     /**
@@ -44,5 +51,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+    public function tasks(){
+        return $this->belongsToMany(Task::class);
     }
 }
