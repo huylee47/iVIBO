@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId("user_access_id");
             $table->string("location_assignment",255);
             $table->string("reason",255);
+            $table->foreignId('status_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->softDeletes();

@@ -10,9 +10,12 @@ use App\Models\Role;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Company;
+use App\Models\Department;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,85 +25,35 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        $faker = Faker::create();
+        
+       $jsonFilePath = "./database/seeders/data.json";
+       $jsonContent = file_get_contents($jsonFilePath);
+       $dataArray = json_decode($jsonContent, true);
+       foreach ($dataArray['company'] as $data) { Company::create($data);}
+       foreach ($dataArray['department'] as $data) { Department::create($data);}
+       foreach ($dataArray['role'] as $data) { Role::create($data);}
+       foreach ($dataArray['status'] as $data) { Status::create($data);}
 
-        $roles = [
-            'Quản lý',
-            'Nhân viên',
-            'Kỹ sư',
-            'Chuyên viên',
-            'Trưởng phòng',
-            'Giám đốc',
-            'Nhân viên hành chính',
-            'Nhân viên kinh doanh',
-            'Nhân viên IT',
-            'Nhân viên marketing'
-        ];
-        $status =[
-            'Hoàn thành',
-            'Chưa hoàn thành',
-            'Đang thực hiện',
-            'Chậm tiến độ',
-            'Tạm dừng',
-            'Đã hủy',
-        ];
-        foreach ($roles as $role) {
-            Role::create([
-                'role_name' => $role,
-            ]);
-        }
-        foreach ($status as $stt) {
-            Status::create([
-                'status_name' => $stt,
-            ]);
-        }
-        foreach (range(1,10) as $index) {
-        check_log::factory()->create([
-            'user_id'=> $faker->numberBetween(1,20),
-            'location_check'=> $faker->ipv4, 
-            'check_in_time' => $faker->dateTime,       
-        ]);
+       foreach ($dataArray['user'] as $data) {
         User::factory()->create([
-            'name' => $faker->name,
-            'username' => $faker->unique()->userName, 
-            'email' => $faker->email,
-            'avatar' => $faker->imageUrl(), 
-            'address' => $faker->address,
-            'phone_number' => '0' . $faker->numerify('#########'),
-            'role_id' => $faker->numberBetween(1, 10),
-            'status' => $faker->numberBetween(1, 4),
-            'password' => bcrypt($faker->password), 
-            'limit_remaining'=>$faker->numberBetween(0, 10),
-            'remember_token' => $faker->regexify('[A-Za-z0-9]{10}'), 
-        ]);
-        Project::factory()->create([    
-            'project_name'=> 'Project '  . $index, 
-            'status' => $faker->numberBetween(1, 6),
-        ]);
-        Task::factory()->create([
-            'project_id'=> $faker->numberBetween(1, 20), 
-            'task_name'=> 'Task ' . $index, 
-            'status' => $faker->numberBetween(1, 6), 
-            'user_id' => $faker->numberBetween(1, 20),
-        ]);
-        Assignment_request::factory()->create([
-            'user_request_id'=> $faker->numberBetween(1, 20), 
-            'user_access_id'=> $faker->numberBetween(1, 20), 
-            'location_assignment'=> $faker->city(), 
-            'reason'=> $faker->text(200), 
-            'start_time'=> $faker->dateTimeBetween('-30 days', '+30 days'), 
-            'end_time'=> $faker->dateTimeBetween('+30 days', '+60 days'),
-        ]);   
-        Leave_request::factory()->create([
-            'user_request_id'=> $faker->numberBetween(1, 20), 
-            'user_access_id'=> $faker->numberBetween(1, 20), 
-            'type'=> $faker->numberBetween(1, 2), 
-            'leave_time'=> $faker->numberBetween(1, 2), 
-            'reason'=> $faker->text(200), 
-            'start_time'=> $faker->dateTimeBetween('-30 days', '+30 days'), 
-            'end_time'=> $faker->dateTimeBetween('+30 days', '+60 days'),
-        ]);
-        }
+            'name' => $data['name'],
+            'username' => $data['username'], 
+            'email' =>  $data['email'],
+            'avatar' => $data['avatar'], 
+            'address' => $data['address'],
+            'phone_number' => $data['phone_number'],
+            'role_id' =>$data['role_id'],
+            'status_id' => $data['status_id'],
+            'password' =>Hash::make($data['password']), 
+            'limit_remaining'=> $data['limit_remaining'],
+            ]);
+       }
+
+       foreach ($dataArray['project'] as $data) { Project::create($data);}
+       foreach ($dataArray['task'] as $data) { Task::create($data);}
+       foreach ($dataArray['assignment_request'] as $data) { Assignment_request::create($data);}
+       foreach ($dataArray['leave_request'] as $data) { Leave_request::create($data);}
+       foreach ($dataArray['check_log'] as $data) { Check_log::create($data);}
 
     }
 }

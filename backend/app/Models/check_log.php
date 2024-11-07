@@ -11,6 +11,9 @@ class check_log extends Model
     use SoftDeletes;
     use HasFactory;
     protected $table = 'check_logs';
-    protected $fillable = ['user_id', 'location_check', 'check_in_time'];
+    protected $fillable = ['user_id'];
+    public function user(){ 
+        return $this->belongsTo(User::class);
+    }
 }
     

@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Level extends Model
+class Company extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'levels';
-    protected $fillable = ['level_name'];
+    protected $table = 'companies';
+    protected $fillable = ['company_name'];
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

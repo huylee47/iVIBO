@@ -4,6 +4,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,6 +12,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +27,7 @@ class User extends Authenticatable
         'address',
         'phone_number',
         'role_id',
-        'status',
+        'status_id',
         'limit_remaining',
         
     ];
@@ -57,5 +59,20 @@ class User extends Authenticatable
     }
     public function tasks(){
         return $this->belongsToMany(Task::class);
+    }
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
+    public function check_log(){
+        return $this->hasMany(Check_log::class);
+    }
+    public function assignment_request(){
+        return $this->hasMany(Assignment_request::class);
+    }
+    public function leave_request(){
+        return $this->hasMany(Leave_request::class);
+    }
+    public function department(){
+        return $this->belongsTo(Department::class);
     }
 }

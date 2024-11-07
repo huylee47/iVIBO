@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create("check_logs", function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string("location_check");
-            $table->dateTime('check_in_time');
             $table->softDeletes();
             $table->timestamps();
         });
