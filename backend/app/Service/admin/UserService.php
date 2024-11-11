@@ -6,9 +6,26 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 
 class UserService{
+    // public function index(){
+    //     $users = User::with('role:id,role_name','status:id,status_name')->get();
+    //     return response()->json($users->map(function($user){
+    //         return [
+    //             'id' => $user->id,
+    //             'name' => $user->name,
+    //             'username' => $user->username,
+    //             'email' => $user->email,
+    //             'avatar' => $user->avatar,
+    //             'address' => $user->address,
+    //             'phone_number' => $user->phone_number,
+    //             'role_name' => $user->role ? $user->role->role_name : null,
+    //             'status_name' => $user->status ? $user->status->status_name : null,
+    //             'limit_remaining' => $user->limit_remaining,
+    //         ];
+    //     }));
+    // }
     public function index(){
-        $users = User::with('role:id,role_name','status:id,status_name')->get();
-        return response()->json($users->map(function($user){
+        $users = User::with('role:id,role_name', 'status:id,status_name')->get();
+        $formattedUsers = $users->map(function($user) {
             return [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -21,9 +38,11 @@ class UserService{
                 'status_name' => $user->status ? $user->status->status_name : null,
                 'limit_remaining' => $user->limit_remaining,
             ];
-        }));
+        });
+    
+        return response()->json($formattedUsers, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
-
+    
     public function store(UserRequest $request){
         $user = User::create([
             'name' => $request->name,
