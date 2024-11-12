@@ -203,12 +203,34 @@
                 "task_name" : "create database",
                 "project_id" : 1,
                 "status_id" : 3,
-                "user_id" : 2
+                "description" : "Khởi tạo database cho dự án",
+                "start_time": "2024-11-01 09:00:00",
+                "end_time": "2024-11-07 17:00:00"
             },
             {
                 "task_name" : "create UI",
                 "project_id" : 1,
                 "status_id" : 3,
+                "description" : "Thiết kế giao diện",
+                "start_time": "2024-11-01 09:00:00",
+                "end_time": "2024-11-07 17:00:00"
+            }
+        ],
+        "task_user":[
+            {
+                "task_id" : 1,
+                "user_id" : 2
+            },
+            {
+                "task_id" : 2,
+                "user_id" : 3
+            },
+            {
+                "task_id" : 2,
+                "user_id" : 2
+            },
+            {
+                "task_id" : 1,
                 "user_id" : 3
             }
         ],
