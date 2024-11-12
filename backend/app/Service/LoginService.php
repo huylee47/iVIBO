@@ -22,10 +22,22 @@ class LoginService {
         $user = Auth::user();
         if($user->role_id == 1){
                 $token = $account->createToken('authToken', ['admin'])->plainTextToken; 
-                return ['success' => true, 'token' => $token, 'role' => 'admin','user' => $user];
+                return 
+                [
+                    'success' => true, 
+                    'token' => $token, 
+                    'role' => 'admin',
+                    'name' => $user->name
+                ];
         }else{
                 $token = $account->createToken('authToken', ['user'])->plainTextToken; 
-                return ['success' => true, 'token' => $token, 'role' => 'user','user' => $user];
+                return 
+                [
+                    'success' => true, 
+                    'token' => $token, 
+                    'role' => 'user',
+                    'name' => $user->name
+                ];
         }
        
     }
