@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('task_name',255);
             $table->foreignId('project_id');
             $table->foreignId('status_id');
-            $table->foreignId('user_id');
+            $table->longText('description');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->softDeletes();
             $table->timestamps();
         });
