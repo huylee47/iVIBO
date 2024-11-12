@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\admin\CheckLogController;
+use App\Http\Controllers\client\TimeKeepingController;;
 use App\Http\Controllers\admin\ProjectController;
+use App\Http\Controllers\admin\TaskController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
@@ -34,10 +35,15 @@ Route::middleware(['auth:sanctum','abilities:admin'])->group(function(){
     //     Route::put('/update/{id}',[ProjectController::class,'update']);
     //     Route::delete('/delete/{id}',[ProjectController::class,'destroy']);
     // });
+    Route::prefix('task')->group(function (){
+        Route::get('/list',[TaskController::class,'index']);
+    });
 });
-
-
-Route::prefix('checklog')->group(function (){
-    Route::get('/',[CheckLogController::class,'index']);
+Route::middleware(['auth:sanctum','abilities:user'])->group(function (){
+    Route::prefix('task')->group(function (){
+        Route::get('/',[TaskController::class,'indexID']);
+    });
+    Route::prefix('check-in')->group(function (){
+        Route::post('/',[TimeKeepingController::class,'checkIn']);
+    });
 });
-
