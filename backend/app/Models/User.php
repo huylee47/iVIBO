@@ -58,9 +58,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
     public function tasks(){
-        return $this->belongsToMany(Task::class);
+        return $this->belongsToMany(Task::class,'task_user');
     }
-    public function status(){
+    public function status(){   
         return $this->belongsTo(Status::class);
     }
     public function check_log(){
