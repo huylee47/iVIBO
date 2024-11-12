@@ -12,6 +12,7 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Department;
+use App\Models\TaskUser;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
 
        foreach ($dataArray['project'] as $data) { Project::create($data);}
        foreach ($dataArray['task'] as $data) { Task::create($data);}
+       foreach ($dataArray['task_user'] as $data) { TaskUser::create($data);}
        foreach ($dataArray['assignment_request'] as $data) { Assignment_request::create($data);}
        foreach ($dataArray['leave_request'] as $data) { Leave_request::create($data);}
        foreach ($dataArray['check_log'] as $data) { Check_log::create($data);}
