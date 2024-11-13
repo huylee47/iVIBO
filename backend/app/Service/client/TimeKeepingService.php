@@ -37,7 +37,7 @@ Class TimeKeepingService{
     }
 
     private function calculateDistance($lat1, $lng1, $lat2, $lng2)
-    {
+    { 
         $earthRadius = 6371000; 
 
         $dLat = deg2rad($lat2 - $lat1);
