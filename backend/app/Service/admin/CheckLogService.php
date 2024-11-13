@@ -1,18 +1,47 @@
 <?php
 
 namespace App\Service\admin;
+
 use App\Models\check_log;
+use Carbon\Carbon;
+
 class CheckLogService {
     public function index() {
-        $check_logs = check_log::with('user:id,name')->get();
-        return response()->json($check_logs->map(function($check_log){
+        $check_logs = check_log::with('user:id,name')
+            ->whereTime('created_at', '>=', '07:00:00')
+            ->whereTime('created_at', '<=', '19:00:00')
+            ->orderBy('user_id')
+            ->orderBy('created_at')
+            ->get();
+
+        $userLogs = $check_logs->groupBy(function ($log) {
+            return $log->user_id . '_' . $log->created_at->format('Y-m-d');
+        })->map(function ($logs, $key) {
+            $totalHours = 0;
+
+            for ($i = 1; $i < $logs->count(); $i++) {
+                $previousLog = $logs[$i - 1]->created_at;
+                $currentLog = $logs[$i]->created_at;
+
+                $diffInHours = $previousLog->diffInHours($currentLog);
+                $totalHours += $diffInHours;
+            }
+
+            $userId = $logs->first()->user_id;
+            $userName = $logs->first()->user->name ?? null;
+            $date = $logs->first()->created_at->format('Y-m-d');
+
+            $isFulfilled = $totalHours >= 8;
+
             return [
-                "id" => $check_log->id,
-                "user_id" => $check_log->user ? $check_log->user->name : null,
-                "location_check" => $check_log->location_check,
-                "check_in_time" => $check_log->check_in_time,
+                'user_id' => $userId,
+                'user_name' => $userName,
+                'date' => $date,
+                'is_fulfilled' => $isFulfilled,
+                'message' => $isFulfilled ? 'Đã đủ 8 tiếng' : 'Chưa đủ 8 tiếng',
             ];
-        }
-    ));
-}
+        });
+
+        return response()->json($userLogs->values());
+    }
 }
