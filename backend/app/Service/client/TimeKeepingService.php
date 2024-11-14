@@ -4,6 +4,7 @@ namespace App\Service\client;
 use App\Models\check_log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 Class TimeKeepingService{
     private $officeLatitude = 20.838185590254955;
@@ -12,6 +13,16 @@ Class TimeKeepingService{
 
     public function checkIn(Request $request)
     {
+        $currentHour = Carbon::now()->format('H'); 
+
+        if ($currentHour < 7 || $currentHour > 19) {
+            return response()->json(
+                ['message' => 'Chấm công không hợp lệ.'], 
+                400,
+                [],
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+            );
+        }
         $user = Auth::user();
         $userLatitude = $request->latitude;
         $userLongitude = $request->longitude;
