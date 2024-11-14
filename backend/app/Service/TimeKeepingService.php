@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\client;
+namespace App\Service;
 
 use App\Models\check_log;
 use Illuminate\Http\Request;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
-use App\Service\admin\TaskService;
+use App\Service\TaskService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller

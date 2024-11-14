@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Service\admin\CheckLogService;
+use App\Service\CheckLogService;
 class CheckLogController extends Controller
 {
     private $checkLogService;

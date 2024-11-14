@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\admin;
+namespace App\Service;
 
 use App\Models\check_log;
 use Carbon\Carbon;
@@ -13,7 +13,6 @@ class CheckLogService {
             ->orderBy('user_id')
             ->orderBy('created_at')
             ->get();
-
         $userLogs = $check_logs->groupBy(function ($log) {
             return $log->user_id . '_' . $log->created_at->format('Y-m-d');
         })->map(function ($logs, $key) {

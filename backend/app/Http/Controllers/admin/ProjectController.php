@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Service\admin\ProjectService;
+use App\Service\ProjectService;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
