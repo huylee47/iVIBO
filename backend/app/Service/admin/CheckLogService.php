@@ -19,6 +19,20 @@ class CheckLogService {
         })->map(function ($logs, $key) {
             $totalHours = 0;
 
+            if ($logs->count() === 1) {
+                $userId = $logs->first()->user_id;
+                $userName = $logs->first()->user->name ?? null;
+                $date = $logs->first()->created_at->format('Y-m-d');
+
+                return [
+                    'user_id' => $userId,
+                    'user_name' => $userName,
+                    'date' => $date,
+                    'is_fulfilled' => false,
+                    'message' => 'Chưa check out',
+                ];
+            }
+
             for ($i = 1; $i < $logs->count(); $i++) {
                 $previousLog = $logs[$i - 1]->created_at;
                 $currentLog = $logs[$i]->created_at;
@@ -36,6 +50,7 @@ class CheckLogService {
             return [
                 'user_id' => $userId,
                 'user_name' => $userName,
+                'total_hours' => round($totalHours,2    ),
                 'date' => $date,
                 'is_fulfilled' => $isFulfilled,
                 'message' => $isFulfilled ? 'Đã đủ 8 tiếng' : 'Chưa đủ 8 tiếng',
@@ -45,3 +60,5 @@ class CheckLogService {
         return response()->json($userLogs->values());
     }
 }
+
+
